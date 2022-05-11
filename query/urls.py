@@ -10,4 +10,5 @@ app_name = "query"
 
 urlpatterns = [
     path("products/", views.ProductView.as_view()),
+    path("rejected-products/", views.RejectedProductView.as_view()),
 ]
