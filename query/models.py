@@ -19,6 +19,17 @@ class TimeStamp(models.Model):
         abstract = True  # Can be used for common fields accross models
 
 
+class ProductLocations(models.Model):
+    city = models.CharField(max_length=20)
+    address = models.TextField()
+
+    def __str__(self) -> str:
+        return self.address
+
+    class Meta:
+        verbose_name = "Location"
+
+
 class Product(TimeStamp):
     name = models.CharField(max_length=50)
     price = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
@@ -26,6 +37,7 @@ class Product(TimeStamp):
     status = models.CharField(
         max_length=2, choices=PRODUCT_STATUS, blank=True, help_text="Product Status"
     )
+    locations = models.ManyToManyField(ProductLocations, blank=True, null=True)
 
     @property
     def discount_price(self):
@@ -37,6 +49,7 @@ class Product(TimeStamp):
     class Meta:
         ordering = ["-id"]
         get_latest_by = "price"
+        indexes = [models.Index(fields=["name"]), models.Index(fields=["status"])]
 
     def __str__(self):
         return str(self.name)
