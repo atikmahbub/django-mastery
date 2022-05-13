@@ -32,4 +32,5 @@ class RejectedProductSerializer(serializers.ModelSerializer):
             "name",
             "rejected_date",
             "status",
+            "price",
         )

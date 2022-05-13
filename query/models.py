@@ -1,5 +1,6 @@
 from django.db import models
 from query.managers import managers
+from django.contrib import admin
 
 # Create your models here.
 
@@ -9,6 +10,24 @@ PRODUCT_STATUS = (
     ("NW", "NEW"),
     ("RJ", "REJECTED"),
 )
+
+MEDIA_CHOICES = [
+    (
+        "Audio",
+        (
+            ("vinyl", "Vinyl"),
+            ("cd", "CD"),
+        ),
+    ),
+    (
+        "Video",
+        (
+            ("vhs", "VHS Tape"),
+            ("dvd", "DVD"),
+        ),
+    ),
+    ("unknown", "Unknown"),
+]
 
 
 class TimeStamp(models.Model):
@@ -38,6 +57,9 @@ class Product(TimeStamp):
         max_length=2, choices=PRODUCT_STATUS, blank=True, help_text="Product Status"
     )
     locations = models.ManyToManyField(ProductLocations, blank=True, null=True)
+    media_category = models.CharField(
+        max_length=12, blank=True, null=True, choices=MEDIA_CHOICES
+    )
 
     @property
     def discount_price(self):

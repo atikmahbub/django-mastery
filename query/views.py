@@ -11,6 +11,6 @@ class ProductView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
 
 
-class RejectedProductView(generics.ListAPIView):
+class RejectedProductView(generics.ListCreateAPIView):
     queryset = RejectedProduct.objects.all()
     serializer_class = RejectedProductSerializer
